@@ -1,0 +1,18 @@
+<form #form="ngForm" autocomplete="off" (submit)="onSubmit(form)">
+    <input type="hidden" name="id" #id="ngModel" [(ngModel)]="formData.ProjectId">
+    <div class="form-group">
+      <input id="title" name="Title" #Title="ngModel" 
+      [(ngModel)]="formData.Title" class="form-control" 
+      placeholder="Title" required>
+      <div class="alert alert-danger" *ngIf="!Title.valid && Title.touched">Title is required</div>
+    </div>
+    <div class="form-group">
+      <input type="date" name="Date" class="form-control" #Date="ngModel" [(ngModel)]="formData.Date" required>
+    </div>
+    <div class="form-group">
+      <textarea row="3" id="description" name="Description" #Description="ngModel" 
+      [(ngModel)]="formData.Description" class="form-control" 
+      placeholder="Description (optional)"></textarea>
+    </div>
+    <button type="submit" [disabled]="form.invalid" class="btn btn-lg btn-block btn-info ">Submit</button>
+  </form>

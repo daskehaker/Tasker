@@ -1,0 +1,28 @@
+/* You can add global styles to this file, and also import other style files */
+input.ng-invalid.ng-touched{
+    border-color: #dc3545
+}
+
+select.ng-invalid.ng-touched{
+    border-color: #dc3545
+}
+
+input.ng-valid.ng-touched{
+    border-color: #28a745
+}
+
+select.ng-valid.ng-touched{
+    border-color: #28a745
+}
+
+#toast-container > div {
+    opacity: 1;
+}
+
+table tr:hover{
+    cursor: pointer;
+}
+
+.card{
+    margin-bottom: 10px;
+}

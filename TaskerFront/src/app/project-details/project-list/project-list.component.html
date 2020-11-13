@@ -1,0 +1,8 @@
+<div *ngFor="let project of projects" class="card" style="width: 80%;">
+    <div class="card-body">
+      <h5 (click)="populateForm(project)" class="card-title">{{project.Title}}</h5>
+      <h6 class="card-subtitle mb-2 text-muted">{{project.Date | date:'fullDate'}}</h6>
+      <p *ngIf="project.Description" class="card-text">{{project.Description}}</p>
+      <button class="btn btn-sm btn-danger" (click)="onDelete(project.ProjectId)">Delete</button>
+    </div>
+  </div>

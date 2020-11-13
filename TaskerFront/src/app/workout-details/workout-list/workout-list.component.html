@@ -1,0 +1,11 @@
+<div class="container-lg">
+    <div class="row row-cols-1 row-cols-md-1 row-cols-lg-2">
+        <div *ngFor="let w of list" class="card col" >
+            <div class="card-body">
+                <h5 class="card-title">{{w.Title}}</h5>
+                <h6 class="card-subtitle mb-2 text-muted">{{w.Date | date:'fullDate'}}</h6>
+                <a [routerLink]="['/workouts/', w.WorkoutId]" class="card-link">Open Workout</a>
+            </div>
+        </div>
+    </div>
+</div>

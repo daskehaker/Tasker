@@ -1,0 +1,27 @@
+<form #form="ngForm" autocomplete="off" (submit)="onSubmit(form)">
+    <input type="hidden" name="ExerciseId" #ExerciseId="ngModel" [ngModel]="getService.formData.ExerciseId">
+    <div class="form-group">
+        <label for="group">Muscule Group</label>
+        <select id="group" class="form-control" name="musculeGroup" #musculeGroup="ngModel" 
+        [(ngModel)]="getService.formData.MusculeGroup" required>
+            <option value=""></option>
+            <option *ngFor="let group of groups.values() ; index as i " [ngValue]="i" >{{group}}</option>
+        </select>
+        <div *ngIf="musculeGroup.touched && !musculeGroup.valid" class="alert alert-danger">Please specify the targeted muscule group</div>
+    </div>
+    <div class="form-group">
+        <div class="input-group">
+            <input class="form-control" name="name" #name="ngModel" [(ngModel)]="getService.formData.Name"
+            placeholder="Enter the name of the exercise" maxlength="50" required>
+        </div>
+        <div *ngIf="name.touched && !name.valid" class="alert alert-danger">Please specify the name of exercise</div>
+    </div>
+    <div class="form-group">
+        <input name="VideoUrl" #VideoUrl="ngModel" [(ngModel)]="getService.formData.VideoUrl" 
+        class="form-control" placeholder="Add the URL of the exercise video" maxLength="500">
+    </div>
+    <div class="form-group">
+        <button class="btn btn-lg btn-block btn-info " type="submit" [disabled]="form.invalid">Submit</button>
+    </div>
+</form>
+

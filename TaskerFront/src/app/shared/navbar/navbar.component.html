@@ -1,0 +1,29 @@
+<nav class="navbar navbar-expand-sm navbar-light bg-light">
+    <div class="container">
+        <button class="navbar-toggler" data-toggle="collapse" data-target="#navbarMenu">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarMenu">
+            <ul class="navbar-nav mr-auto">
+            <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+                <a class="nav-link" [routerLink]='["/home"]'>Home<span class="sr-only"></span></a>
+            </li>
+            <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+                <a class="nav-link" [routerLink]='["/workouts"]'>Workouts<span class="sr-only"></span></a>
+            </li>
+            <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+                <a class="nav-link" [routerLink]='["/exercises"]'>Exercises</a>
+            </li>
+            <li *ngIf="!localStorage.getItem('token')" class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+                <a class="nav-link" [routerLink]='["/user/login"]'>Login form</a>
+            </li>
+            <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+                <a class="nav-link" [routerLink]='["projects"]'>Projects</a>
+            </li>
+            </ul>
+            <span *ngIf="localStorage.getItem('token')">
+                <a class="btn btn-secondary" (click)="logout()">Logout</a>
+            </span>
+        </div>
+    </div>
+</nav>

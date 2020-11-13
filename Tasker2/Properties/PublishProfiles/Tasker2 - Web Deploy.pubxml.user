@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+This file is used by the publish/package process of your Web project. You can customize the behavior of this process
+by editing this MSBuild file. In order to learn more about this please visit https://go.microsoft.com/fwlink/?LinkID=208121. 
+-->
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <TimeStampOfAssociatedLegacyPublishXmlFile />
+    <EncryptedPassword>AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAYkwc+NeubEWcHfiGFXjdMgAAAAACAAAAAAAQZgAAAAEAACAAAADQOPMkfRgDl3+Dtt3d6kiofSOds4xESXj9sk+hF7UWfQAAAAAOgAAAAAIAACAAAAD3dERs/CYJ8grgQdWbLclH4QI6JPKLy1q4hnxbjATeKoAAAAAQl55o4Cgdi1NOVuCJeGQhQhzDF+ILYd5EzYt84XMz+aoGt/F9r3RayQd4FmBtPm/WYxUS/6rs/5s1TbRVzxGvhaFkTM15CgsveYgZwaAuMPB6SwrAuBkVJCrx/sbTq2wzQmxZQBqyXp/DZn5GEnw4h+UlP6x/74q9pT2ygHXEu0AAAAAswMAdu9koKtE0NKisPLtJsiX9NR3Lh8US7bI0HKktakuowT4a7ao+o7dEc9MsRa1ROs/wmWFEIlok1F7M8jwx</EncryptedPassword>
+  </PropertyGroup>
+  <ItemGroup>
+    <DestinationConnectionStrings Include="DefaultConnection">
+      <Value>Data Source=tcp:tasker2databaseserver.database.windows.net,1433%3bInitial Catalog=Tasker2_db%3bUser Id=daske%40tasker2databaseserver%3bPassword=Vierchas123</Value>
+    </DestinationConnectionStrings>
+  </ItemGroup>
+</Project>

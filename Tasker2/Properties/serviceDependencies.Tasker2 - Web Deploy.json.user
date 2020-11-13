@@ -1,0 +1,54 @@
+{
+  "dependencies": {
+    "mssql2": {
+      "restored": false,
+      "restoreTime": "2020-11-02T15:48:10.706529Z"
+    },
+    "mssql1": {
+      "restored": false,
+      "restoreTime": "2020-11-02T15:48:10.706529Z"
+    }
+  },
+  "parameters": {
+    "mssql2.resourceGroupLocation": {
+      "Type": "location",
+      "Value": "westeurope"
+    },
+    "mssql2.subscriptionId": {
+      "Type": "subscription",
+      "Value": "3aed6fc2-d325-4ae0-adea-5231f1f9f845"
+    },
+    "mssql2.resourceGroupName": {
+      "Type": "resourceGroup",
+      "Value": "cloud-shell-storage-westeurope"
+    },
+    "mssql1.resourceGroupLocation": {
+      "Type": "location",
+      "Value": "westeurope"
+    },
+    "mssql1.subscriptionId": {
+      "Type": "subscription",
+      "Value": "3aed6fc2-d325-4ae0-adea-5231f1f9f845"
+    },
+    "Tasker2.subscriptionId": {
+      "Type": "subscription",
+      "Value": "3aed6fc2-d325-4ae0-adea-5231f1f9f845"
+    },
+    "Tasker2.resourceGroupName": {
+      "Type": "resourceGroup",
+      "Value": "cloud-shell-storage-westeurope"
+    },
+    "Tasker2.resourceName": {
+      "Type": null,
+      "Value": "Tasker2"
+    },
+    "mssql1.resourceGroupName": {
+      "Type": "resourceGroup",
+      "Value": "cloud-shell-storage-westeurope"
+    },
+    "subscriptionId": {
+      "Type": "subscription",
+      "Value": "3aed6fc2-d325-4ae0-adea-5231f1f9f845"
+    }
+  }
+}

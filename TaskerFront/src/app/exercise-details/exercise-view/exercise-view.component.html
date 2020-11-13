@@ -1,0 +1,12 @@
+<div class="card">
+    <div class="card-body">
+      <h5 class="card-title">{{index + 1}} {{exercise.Name}}</h5>   
+      <div *ngIf="exercise.VideoUrl">
+        <span (click)="toggleDisplayDiv()" class="material-icons">movie</span>    
+        <div [hidden]="isShowDiv" class="embed-responsive embed-responsive-16by9">
+          <iframe class="embed-responsive-item" [src]='safeUrl' allowfullscreen></iframe>
+        </div>
+      </div>
+      <p class="card-text">{{exercise.Sets}} sets, {{exercise.Reps}} reps</p>
+    </div>
+</div>

@@ -1,0 +1,49 @@
+<form [formGroup]="form" (ngSubmit)=Submit()>
+    <div class="form-group">
+        <label for="Title">Title</label>
+        <input formControlName="Title" type="text" id="Title" class="form-control" required>
+        <input formControlName="WorkoutId" type="hidden" id="WorkoutId" class="form-control">
+    </div>
+    <div *ngIf="Title.touched && !Title.valid" class="alert alert-danger">Please specify the title of workout</div>
+    <div class="form-group">
+        <input formControlName="Type" type="hidden" id="Type" value="0">
+    </div>
+    <div class="form-group">
+        <label for="Date">Date</label>
+        <input formControlName="Date" type="date" id="Date" class="form-control" required>
+    </div>
+    <!-- <div *ngIf="Date.touched && !Date.valid" class="alert alert-danger">Please specify the date of workout</div> -->
+    <div formArrayName="Exercises" *ngFor="let item of Exercises.controls; let i = index;">
+        <div [formGroupName]="i">
+            <div>
+              <div class="form-group">
+                <input type="hidden" class="form-control" formControlName="ExerciseId">
+                <input type="hidden" class="form-control" formControlName="Index" >
+              </div>
+              <div class="form-row">
+                <div class="form-group col-10">
+                  <label for="Name">Exercise</label>
+                  <input id="Name" readonly type="text" class="form-control" formControlName="Name" placeholder="Item title" required>
+                </div>
+                <div class="form-group col-2 d-flex justify-content-center">
+                  <i class="form-control" style="display: inline-block; width: 100%; margin-top: 30%; height: 100%; font-size:50px;" (click)="RemoveExer(i)" class="material-icons">remove_circle_outline</i>
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="col">
+                    <label for="Sets">Sets</label>
+                    <input id="Sets" type="number" min="1" max="1000000" class="form-control" formControlName="Sets" required>
+                </div>
+                <div class="col">
+                  <div class="form-group">
+                    <label for="Reps">Repetitions</label>
+                    <input id="Reps" type="number" min="1" max="1000000" class="form-control" formControlName="Reps" required>
+                  </div>
+                </div>
+              </div>
+              <div *ngIf="item.controls.Sets.touched && !item.controls.Sets.valid || item.controls.Reps.touched && !item.controls.Reps.valid" class="alert alert-danger">Please specify the numbers of sets and repetitions</div>
+            </div>
+          </div>
+    </div>
+    <button class="btn btn-lg btn-block btn-info " type="sumbit" [disabled]="form.invalid" >Submit</button>
+</form>

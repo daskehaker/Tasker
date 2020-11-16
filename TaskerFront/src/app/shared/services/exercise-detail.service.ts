@@ -9,7 +9,7 @@ import { environment } from 'src/environments/environment';
 export class ExerciseDetailService {
   formData: ExerciseDetail;
   list: ExerciseDetail[];
-  readonly rootUrl =  environment.rootUrl + "/api/Exercises/" //"https://tasker2.azurewebsites.net/api/Exercises/"
+  readonly rootUrl =  environment.rootUrl + "/api/Exercises/";
 
   constructor(private http: HttpClient) { }
 

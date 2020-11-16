@@ -30,5 +30,6 @@ export class ExerciseViewComponent implements OnInit {
 
   toggleDisplayDiv() {
     this.isShowDiv = !this.isShowDiv;
+    return this.isShowDiv;
   }
 }

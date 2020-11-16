@@ -10,8 +10,7 @@ import { threadId } from 'worker_threads';
   providedIn: 'root'
 })
 export class WorkoutDetailService {
-  //default: workoutExercise = { ExerciseId: 0, Name: "", Reps: 0, Sets: 0 }
-  readonly rootUrl = environment.rootUrl + "/api/Workouts/"//"https://tasker2.azurewebsites.net/api/Workouts/";
+  readonly rootUrl = environment.rootUrl + "/api/Workouts/"
   exercise = new BehaviorSubject({})
   currentExercise = this.exercise.asObservable();
 

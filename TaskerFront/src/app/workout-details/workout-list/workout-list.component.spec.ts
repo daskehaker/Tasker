@@ -1,4 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { of, Observable } from 'rxjs';
+import { WorkoutDetailService } from 'src/app/shared/services/workout-detail.service';
 
 import { WorkoutListComponent } from './workout-list.component';
 
@@ -14,12 +16,24 @@ describe('WorkoutListComponent', () => {
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(WorkoutListComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
+    TestBed.configureTestingModule({
+      //provide component-under-test and dependent service
+      providers: [
+        WorkoutListComponent,
+        {provide: WorkoutDetailService, useClass: MockWorkoutDetailService}
+      ]
+    });
+    component = TestBed.inject(WorkoutListComponent);
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
   });
 });
+
+class MockWorkoutDetailService{
+  newWorkout = new Observable();
+  GetList(){
+    return of()
+  }
+  }

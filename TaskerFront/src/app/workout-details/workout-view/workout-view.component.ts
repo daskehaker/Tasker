@@ -18,7 +18,6 @@ export class WorkoutViewComponent implements OnInit {
   id: number;
 
   constructor(private servise: WorkoutDetailService,
-    private exerciseServise: ExerciseDetailService,
     route: ActivatedRoute,
     private router: Router) { 
       route.params.subscribe(p => {

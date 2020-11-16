@@ -16,19 +16,16 @@ export class WorkoutEditComponent implements OnInit {
   workout: WorkoutDetail;
 
   constructor(private route: ActivatedRoute,
-    private service: WorkoutDetailService,
-    private ngZone: NgZone) {
+    private service: WorkoutDetailService,) {
     route.params.subscribe(p =>
       this.id = +p['id'])
   }
 
   ngOnInit(): void {
-    //this.ngZone.run(() => {
       this.service.get(this.id).subscribe((res: WorkoutDetail) => {
         this.workout = res;
         this.detailComponent.PopulateForm(this.workout);
       });
-    //})
   }
 
 

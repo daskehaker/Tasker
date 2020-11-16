@@ -14,9 +14,10 @@ describe('ExerciseListComponent', () => {
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ExerciseListComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
+    // fixture = TestBed.createComponent(ExerciseListComponent);
+    // component = fixture.componentInstance;
+    // fixture.detectChanges();
+    component = new ExerciseListComponent(null, null)
   });
 
   it('should create', () => {

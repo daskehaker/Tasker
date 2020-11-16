@@ -14,9 +14,11 @@ describe('LoginFormComponent', () => {
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(LoginFormComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
+    // fixture = TestBed.createComponent(LoginFormComponent);
+    // component = fixture.componentInstance;
+    // fixture.detectChanges();
+
+    component = new LoginFormComponent(null, null)
   });
 
   it('should create', () => {

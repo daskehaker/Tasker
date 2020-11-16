@@ -14,12 +14,24 @@ describe('ExerciseViewComponent', () => {
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ExerciseViewComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
+    // fixture = TestBed.createComponent(ExerciseViewComponent);
+    // component = fixture.componentInstance;
+    // fixture.detectChanges();
+
+    component = new ExerciseViewComponent(null)
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should change bool value', () => {
+    let initValue = component.isShowDiv;
+    component.toggleDisplayDiv();
+    expect(component.isShowDiv).toEqual(!initValue);
+  });
+
+  it('should be true when component created', () => {
+    expect(component.isShowDiv).toBeTrue();
+  })
 });

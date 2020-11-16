@@ -25,7 +25,7 @@ export class RegistrationFormComponent implements OnDestroy {
     subscription: Subscription
 
   constructor(private formBuilder: FormBuilder,
-    private servise: UserService,
+    private userServise: UserService,
     private router: Router,
     private toster: TosterNotificationsService) { 
       this.formModel.reset()
@@ -74,7 +74,7 @@ export class RegistrationFormComponent implements OnDestroy {
       Password: this.Password.value
     }
 
-    this.subscription = this.servise.register(userBody).subscribe(
+    this.subscription = this.userServise.register(userBody).subscribe(
       (res) => {
         this.toster.create('User');
         this.router.navigate(['user/login'], { queryParams: { registered: 'true' } });

@@ -13,8 +13,8 @@ export class ExerciseDetailComponent implements OnInit {
   groups = MusculeGroup;
 
   constructor(private service: ExerciseDetailService,
-    private toastr: ToastrService) {
-    }
+              private toastr: ToastrService) {
+  }
 
   ngOnInit() {
     this.resetForm();

@@ -14,9 +14,7 @@ describe('NavbarComponent', () => {
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(NavbarComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
+    component = new NavbarComponent(null)
   });
 
   it('should create', () => {

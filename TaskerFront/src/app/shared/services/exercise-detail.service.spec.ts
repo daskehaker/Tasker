@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { TestBed } from '@angular/core/testing';
 
 import { ExerciseDetailService } from './exercise-detail.service';
@@ -6,7 +7,11 @@ describe('ExerciseDetailService', () => {
   let service: ExerciseDetailService;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({});
+    TestBed.configureTestingModule({
+      providers: [
+        {provide: HttpClient, useClass: MockHttpClient}
+      ]
+    });
     service = TestBed.inject(ExerciseDetailService);
   });
 
@@ -14,3 +19,7 @@ describe('ExerciseDetailService', () => {
     expect(service).toBeTruthy();
   });
 });
+
+class MockHttpClient {
+
+}

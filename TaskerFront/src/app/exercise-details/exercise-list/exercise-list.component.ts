@@ -32,8 +32,12 @@ export class ExerciseListComponent implements OnInit {
         this.service.refreshList()
       },
       err => {
-        console.log(err)
+        this.logError(err)
       }
     )
+  }
+
+  logError(err: any){
+    console.log(err)
   }
 }

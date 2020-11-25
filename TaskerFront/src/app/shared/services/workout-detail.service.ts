@@ -1,10 +1,8 @@
 import { environment } from '../../../environments/environment';
-import { ExerciseDetail } from '../models/exercise-detail.model';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { WorkoutDetail, WorkoutExercise } from '../models/workout-detail.model';
 import { BehaviorSubject } from 'rxjs';
-import { threadId } from 'worker_threads';
 
 @Injectable({
   providedIn: 'root'

@@ -9,7 +9,7 @@ import { environment } from 'src/environments/environment';
 })
 export class ProjectService {
   formData: ProjectDetail;
-  list: ProjectDetail[];
+  list: ProjectDetail[] = [];
   readonly rootUrl = environment.rootUrl + "/api/Projects/"//"https://tasker2.azurewebsites.net/api/Projects/"
 
   constructor(private http: HttpClient) { }
@@ -30,7 +30,6 @@ export class ProjectService {
     return this.http.get(this.rootUrl).toPromise()
     .then((res: ProjectDetail[]) =>{
       this.list = res
-      //this.sort();
     })
   }
 
@@ -42,7 +41,9 @@ export class ProjectService {
   }
 
   resetForm(form?: NgForm) {
-    if(form) form.resetForm();
+    if(form) {
+      form.resetForm();
+    }
     this.formData={
       ProjectId: 0,
       Date: null,

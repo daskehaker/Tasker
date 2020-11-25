@@ -11,9 +11,9 @@ export enum MusculeGroup{
 
 export namespace MusculeGroup {
 
-    export function values() {
-      return Object.keys(MusculeGroup).filter(
-        (type) => isNaN(<any>type) && type !== 'values'
-      );
-    }
+  export function values() {
+    return Object.keys(MusculeGroup).filter(
+      (type) => isNaN(<any>type) && type !== 'values'
+    );
   }
+}

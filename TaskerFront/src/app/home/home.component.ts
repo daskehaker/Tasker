@@ -10,7 +10,7 @@ export class HomeComponent implements OnInit {
   user: any = {}
 
   constructor(private servise: UserService) {
-    this.servise.getUser().subscribe(res => {this.user = res; console.log(res)})
+    this.servise.getUser().subscribe(res => {this.user = res})
   }
   
   ngOnInit(): void {

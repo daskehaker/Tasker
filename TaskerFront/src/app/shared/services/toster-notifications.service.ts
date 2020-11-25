@@ -12,11 +12,11 @@ export class TosterNotificationsService {
     this.toastr.success(item + ' created successfully');
   }
 
-  update() {
-    this.toastr.info('Exercise Updated successfully');
+  update(item: string) {
+    this.toastr.info(item + ' updated successfully');
   }
 
-  delete(){
-    this.toastr.warning("Deleted succesfully");
+  delete(item: string){
+    this.toastr.warning(item + "deleted succesfully");
   }
 }

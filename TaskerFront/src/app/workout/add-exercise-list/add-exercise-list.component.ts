@@ -1,6 +1,6 @@
+import { ExerciseDetail } from './../../shared/models/exercise-detail.model';
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { MusculeGroup } from 'src/app/enumerations/musculeGroup';
-import { ExerciseDetail } from 'src/app/shared/models/exercise-detail.model';
 import { ExerciseDetailService } from 'src/app/shared/services/exercise-detail.service';
 import { WorkoutDetailService } from 'src/app/shared/services/workout-detail.service';
 
@@ -15,8 +15,8 @@ export class AddExerciseListComponent implements OnInit {
   filter: any = {};
 
   constructor(private exerciseService: ExerciseDetailService,
-    private workoutServise: WorkoutDetailService, 
-    private cdr: ChangeDetectorRef) { }
+              private workoutServise: WorkoutDetailService, 
+              private cdr: ChangeDetectorRef) { }
 
   ngOnInit(): void {
     this.exerciseService.refreshList();
@@ -24,12 +24,16 @@ export class AddExerciseListComponent implements OnInit {
   }
 
   get Exercises(): ExerciseDetail[] {
-    var list = this.exerciseService.list
-    if(this.filter.Index != null) {
-      list = list.filter(e => {
-        e.MusculeGroup == this.filter.Index
+    
+    let list:ExerciseDetail[] = []
+    if(this.filter.Index>-1){
+      this.exerciseService.list.forEach(e => {
+        if(e.MusculeGroup == this.filter.Index){
+          list.push(e);
+        }
       })
-    } 
+    }
+    
     return list
   }
 
@@ -45,6 +49,7 @@ export class AddExerciseListComponent implements OnInit {
   resetFilter(){
     this.filter={};
     this.onFilterChange()
+    console.log()
   }
 
 }

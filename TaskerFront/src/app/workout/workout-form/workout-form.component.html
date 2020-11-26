@@ -3,16 +3,16 @@
         <label for="Title">Title</label>
         <input formControlName="Title" type="text" id="Title" class="form-control" required>
         <input formControlName="WorkoutId" type="hidden" id="WorkoutId" class="form-control">
+        <div *ngIf="Title.touched && !Title.valid" class="alert alert-danger">Workout title is required </div>
     </div>
-    <div *ngIf="Title.touched && !Title.valid" class="alert alert-danger">Please specify the title of workout</div>
     <div class="form-group">
         <input formControlName="Type" type="hidden" id="Type" value="0">
     </div>
     <div class="form-group">
-        <label for="Date">Date</label>
+      <label for="Date">Date</label>
         <input formControlName="Date" type="date" id="Date" class="form-control" required>
+        <div *ngIf="Date.touched && !Date.valid" class="alert alert-danger">Date is required </div>
     </div>
-    <!-- <div *ngIf="Date.touched && !Date.valid" class="alert alert-danger">Please specify the date of workout</div> -->
     <div formArrayName="Exercises" *ngFor="let item of Exercises.controls; let i = index;">
         <div [formGroupName]="i">
             <div>

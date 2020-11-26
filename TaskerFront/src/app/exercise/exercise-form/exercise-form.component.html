@@ -7,14 +7,14 @@
             <option value=""></option>
             <option *ngFor="let group of groups.values() ; index as i " [ngValue]="i" >{{group}}</option>
         </select>
-        <div *ngIf="musculeGroup.touched && !musculeGroup.valid" class="alert alert-danger">Please specify the targeted muscule group</div>
+        <div *ngIf="musculeGroup.touched && !musculeGroup.valid" class="alert alert-danger">muscule group field is required</div>
     </div>
     <div class="form-group">
         <div class="input-group">
             <input class="form-control" name="name" #name="ngModel" [(ngModel)]="getService.formData.Name"
             placeholder="Enter the name of the exercise" maxlength="50" required>
         </div>
-        <div *ngIf="name.touched && !name.valid" class="alert alert-danger">Please specify the name of exercise</div>
+        <div *ngIf="name.touched && !name.valid" class="alert alert-danger">Exercise name is required</div>
     </div>
     <div class="form-group">
         <input name="VideoUrl" #VideoUrl="ngModel" [(ngModel)]="getService.formData.VideoUrl" 

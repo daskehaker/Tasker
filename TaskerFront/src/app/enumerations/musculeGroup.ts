@@ -1,12 +1,12 @@
 export enum MusculeGroup{
-    Legs = 0,
+    Legs,
     Chest,
     Back,
     Biceps,
     Triceps,
     Abs,
     Cardio,
-	Soulders
+	  Soulders
 }
 
 export namespace MusculeGroup {

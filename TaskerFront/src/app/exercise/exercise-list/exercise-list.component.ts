@@ -1,3 +1,4 @@
+import { take } from 'rxjs/operators';
 import { TosterNotificationsService } from 'src/app/shared/services/toster-notifications.service';
 import { MusculeGroup } from './../../enumerations/musculeGroup';
 import { ExerciseDetail } from './../../shared/models/exercise-detail.model';
@@ -30,8 +31,9 @@ export class ExerciseListComponent implements OnInit {
   }
 
   onDelete(id:number){
+    const deleteSubscribtion = this.service.delete(id).pipe(take(1));
     if(confirm('Are you sure?')) {
-      this.service.delete(id).subscribe(
+      deleteSubscribtion.subscribe(
         res => {
           this.toster.delete(this.item)
           this.service.refreshList()

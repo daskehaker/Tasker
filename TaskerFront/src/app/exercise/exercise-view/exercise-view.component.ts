@@ -1,8 +1,5 @@
-import { OrderByIndexPipe } from './../../shared/custome-pipes/order-by-index.pipe';
-import { ExerciseDetailService } from 'src/app/shared/services/exercise-detail.service';
 import { WorkoutExercise } from './../../shared/models/workout-detail.model';
 import { Component, OnInit, Input } from '@angular/core';
-import { ExerciseDetail } from 'src/app/shared/models/exercise-detail.model';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 @Component({
@@ -22,12 +19,16 @@ export class ExerciseViewComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    if(this.isUrl){
+    if(this.isUrl()){
       if(this.containsBadString()){
         this.resplaceUrl()
       }
       this.makeSafeUrl();
     }
+  }
+
+  sanitazeUrl(){
+
   }
 
   resplaceUrl(){
@@ -49,7 +50,8 @@ export class ExerciseViewComponent implements OnInit {
   }
 
   containsBadString(): boolean{
-    if(this.exercise.VideoUrl.indexOf('youtube.com/watch?v=')!= -1) {
+    if(this.exercise.VideoUrl.indexOf('youtube.com/watch?v=') > -1) {
+      console.log(`ar yra blogas url: ${this.exercise.VideoUrl.indexOf('youtube.com/watch?v=')}`)
       return true;
     }
     else{

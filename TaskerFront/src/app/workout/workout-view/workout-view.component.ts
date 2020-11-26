@@ -1,3 +1,4 @@
+import { TosterNotificationsService } from './../../shared/services/toster-notifications.service';
 import { throwError } from 'rxjs';
 import { WorkoutDetail } from 'src/app/shared/models/workout-detail.model';
 import { ExerciseDetail } from './../../shared/models/exercise-detail.model';
@@ -5,6 +6,7 @@ import * as _ from 'underscore';
 import { WorkoutDetailService } from 'src/app/shared/services/workout-detail.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-workout-view',
@@ -19,7 +21,8 @@ export class WorkoutViewComponent implements OnInit, OnDestroy {
 
   constructor(private servise: WorkoutDetailService,
     route: ActivatedRoute,
-    private router: Router) { 
+    private router: Router,
+    private toster: TosterNotificationsService) { 
       route.params.subscribe(p => {
         this.id = +p['id']
         if(isNaN(this.id) || this.id <= 0)
@@ -56,15 +59,15 @@ export class WorkoutViewComponent implements OnInit, OnDestroy {
             else return 0;
         }
         );
-        console.log(this.workout)
       });
   }
 
   delete(){
+    const subscription = this.servise.delete(this.id).pipe(take(1));
     if (confirm("Are you sure?")){
-      this.servise.delete(this.id)
-        .subscribe(x => {
+      subscription.subscribe(() => {
           this.router.navigate(['/workouts']);
+          this.toster.delete("Workout")
         },
         (err) => {
           console.error(err);

@@ -1,8 +1,9 @@
 import { ProjectDetail } from '../models/project-detail.models';
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, LOCALE_ID } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { environment } from 'src/environments/environment';
+import { DatePipe } from '@angular/common';
 
 @Injectable({
   providedIn: 'root'
@@ -35,8 +36,19 @@ export class ProjectService {
 
   //populate edit form
   edit(data: ProjectDetail, edit: boolean){
-    data.Date = (new Date(data.Date).toISOString().slice(0, 10)) as unknown as Date
-    if(edit) this.formData = Object.assign({}, data)
+    if(edit){
+      // data.Date = (new Date(data.Date).toISOString().slice(0, 10)) as unknown as Date
+      // this.formData = Object.assign({}, data)
+      let date = data.Date
+      //let datePipe = new DatePipe('en_150').transform(date, "yyyy-MM-dd")//.toString();
+      // console.log(datePipe);
+      this.formData = {
+        ProjectId: data.ProjectId,
+        Date: new Date(date),
+        Title: data.Title,
+        Description: data.Description,
+      }
+    } 
     else this.resetForm();
   }
 

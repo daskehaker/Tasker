@@ -1,9 +1,10 @@
+import { TosterNotificationsService } from './../../shared/services/toster-notifications.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { WorkoutExercise, WorkoutDetail } from './../../shared/models/workout-detail.model';
 import { WorkoutDetailService } from '../../shared/services/workout-detail.service';
 import { Component, OnInit, ChangeDetectorRef, AfterViewInit, NgZone, Input } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, FormArray } from '@angular/forms';
-import { tap, delay } from 'rxjs/operators';
+import { tap, delay, take } from 'rxjs/operators';
 
 @Component({
   selector: 'workout-form',
@@ -17,20 +18,19 @@ export class WorkoutFormComponent implements OnInit, AfterViewInit {
   constructor(
     private ngZode: NgZone,
     private formBuilder: FormBuilder,
-    private route: ActivatedRoute,
     private router: Router, 
     private service: WorkoutDetailService,
-    private cdr: ChangeDetectorRef) {
-      
-     }
+    private cdr: ChangeDetectorRef,
+    private toster: TosterNotificationsService) {}
 
   ngAfterViewInit(): void {
     this.service.currentExercise.pipe(
       delay(0)).subscribe((res: WorkoutExercise) => 
-      {if(res.ExerciseId)
       {
-        this.AddExer(res)
-      } 
+        if(res.ExerciseId)
+          {
+            this.AddExer(res)
+          } 
       })
     this.cdr.detectChanges();
   }
@@ -45,7 +45,7 @@ export class WorkoutFormComponent implements OnInit, AfterViewInit {
       WorkoutId: workout.WorkoutId,
       Title: workout.Title,
       Type: 0,
-      Date: new Date(workout.Date).toISOString().slice(0, 10),
+      Date: new Date(workout.Date),
       Exercises: this.formBuilder.array([])
     })
     workout.Exercises.forEach(element => {
@@ -88,6 +88,10 @@ export class WorkoutFormComponent implements OnInit, AfterViewInit {
     return this.form.get('Title')
   }
 
+  get Date() {
+    return this.form.get('Date')
+  }
+
   get Exercises() {
     return this.form.get('Exercises') as FormArray;
   }
@@ -99,19 +103,30 @@ export class WorkoutFormComponent implements OnInit, AfterViewInit {
   Submit() {
     delete this.form.value.Name;
     if(+this.form.get("WorkoutId").value == 0){
-      this.ngZode.run(() => {
-        this.service.Add(this.form.value).subscribe(res => this.service.workout.next(res))
-        this.resetForm()
-      })
+      this.insert();
     }
-    //cia reikia tosterio
     else {
-      this.ngZode.run(() => {
-        this.service.Update(this.form.get("WorkoutId").value, this.form.value).subscribe(res => this.service.workout.next(res))
-        this.router.navigate(['/workouts/', +this.form.get("WorkoutId").value])
-        this.resetForm()
-      })
+      this.update();
     }
+  }
+
+  insert(){
+    const subscription = this.service.Add(this.form.value).pipe(take(1));
+    this.ngZode.run(() => {
+      subscription.subscribe(res => this.service.workout.next(res))
+      this.toster.create("Workout");
+      this.resetForm()
+    })
+  }
+
+  update(){
+    const subscription = this.service.Update(this.form.get("WorkoutId").value, this.form.value).pipe(take(1))
+    this.ngZode.run(() => {
+      subscription.subscribe(res => this.service.workout.next(res))
+      this.toster.update("Workout")
+      this.router.navigate(['/workouts'])
+      this.resetForm()
+    })
   }
 
   resetForm(){

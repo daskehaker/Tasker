@@ -1,3 +1,4 @@
+import { take } from 'rxjs/operators';
 import { TosterNotificationsService } from 'src/app/shared/services/toster-notifications.service';
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
@@ -18,8 +19,12 @@ export class ProjectFormComponent implements OnInit {
   }
 
   onSubmit(form:NgForm){
-    if(this.service.formData.ProjectId==0) this.insert(form)
-    else this.update(form)
+    if(this.service.formData.ProjectId==0){
+      this.insert(form)
+    } 
+    else{
+      this.update(form)
+    } 
   }
 
   get formData(){
@@ -27,8 +32,9 @@ export class ProjectFormComponent implements OnInit {
   }
 
   update(form:NgForm){
-    this.service.put().subscribe(
-      res => {
+    const updateSubscribtion = this.service.put().pipe(take(1));
+    updateSubscribtion.subscribe(
+      () => {
         this.service.resetForm(form)
         this.toster.update(this.item)
         this.service.get()
@@ -40,8 +46,9 @@ export class ProjectFormComponent implements OnInit {
   }
 
   insert(form:NgForm){
-    this.service.post().subscribe(
-      res => {
+    const insertSubcribtion = this.service.post().pipe(take(1));
+    insertSubcribtion.subscribe(
+      () => {
         this.service.resetForm(form)
         this.toster.create(this.item);
         this.service.get()

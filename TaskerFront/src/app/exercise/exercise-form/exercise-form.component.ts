@@ -3,6 +3,7 @@ import { MusculeGroup } from '../../enumerations/musculeGroup';
 import { ExerciseDetailService } from '../../shared/services/exercise-detail.service';
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'exercise-form',
@@ -39,7 +40,8 @@ export class ExerciseFormComponent implements OnInit {
   }
 
   update(form:NgForm){
-    this.service.put().subscribe(
+    const updateSubscription = this.service.put().pipe(take(1));
+    updateSubscription.subscribe(
       res => {
         this.resetForm(form)
         this.toster.update(this.item);
@@ -52,7 +54,8 @@ export class ExerciseFormComponent implements OnInit {
   }
 
   insert(form:NgForm){
-    this.service.post().subscribe(
+    const isertSubscription = this.service.post().pipe(take(1));
+    isertSubscription.subscribe(
       res => {
         this.resetForm(form)
         this.toster.create(this.item);

@@ -14,11 +14,11 @@
             <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
                 <a class="nav-link" [routerLink]='["/exercises"]'>Exercises</a>
             </li>
-            <li *ngIf="!localStorage.getItem('token')" class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
-                <a class="nav-link" [routerLink]='["/user/login"]'>Login form</a>
-            </li>
             <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
                 <a class="nav-link" [routerLink]='["projects"]'>Projects</a>
+            </li>
+            <li *ngIf="!localStorage.getItem('token')" class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+                <a class="nav-link" [routerLink]='["/user/login"]'>Login</a>
             </li>
             </ul>
             <span *ngIf="localStorage.getItem('token')">

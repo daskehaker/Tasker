@@ -3,30 +3,30 @@
         <label>Username</label>
         <input class="form-control" type="text" formControlName="UserName">
     </div>
-    <div *ngIf="UserName.touched && !UserName.valid" class="alert alert-danger">This fiel is required</div>
+    <div *ngIf="UserName.touched && !UserName.valid" class="alert alert-danger">This field is required</div>
     <div class="form-group">
         <label>Email</label>
         <input class="form-control" type="text" formControlName="Email">
     </div>
-    <div *ngIf="Email.touched && !Email.valid" class="alert alert-danger">This fiel is required</div>
+    <div *ngIf="Email.touched && !Email.valid" class="alert alert-danger">This field is required</div>
     <div *ngIf="Email.errors?.email" class="alert alert-danger">Invalid email address</div>
     <div class="form-group">
         <label>Full name</label>
         <input class="form-control" type="text" formControlName="FullName">
     </div>
-    <div *ngIf="FullName.touched && !FullName.valid" class="alert alert-danger">This fiel is required</div>
+    <div *ngIf="FullName.touched && !FullName.valid" class="alert alert-danger">This field is required</div>
     <div formGroupName="Passwords">
         <div class="form-group">
             <label>Password</label>
             <input class="form-control" type="password" formControlName="Password">
         </div>
-        <div *ngIf="Password.touched && !Password.valid" class="alert alert-danger">This fiel is required</div>
+        <div *ngIf="Password.touched && !Password.valid" class="alert alert-danger">This field is required</div>
         <div *ngIf="Password.touched && Password.errors?.minlength" class="alert alert-danger">Password should be at least 6 letters</div>
         <div class="form-group">
             <label>Confirm Password</label>
             <input class="form-control" type="password" formControlName="ConfirmPassword">
         </div>
-        <div *ngIf="ConfirmPassword.touched && !ConfirmPassword.valid" class="alert alert-danger">This fiel is required</div>
+        <div *ngIf="ConfirmPassword.touched && !ConfirmPassword.valid" class="alert alert-danger">This field is required</div>
         <div *ngIf="ConfirmPassword.errors?.passwordMismatch" class="alert alert-danger">Passwords do not match</div>
     </div>
     <div class="form-row">

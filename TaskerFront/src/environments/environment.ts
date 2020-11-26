@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  rootUrl: "https://localhost:44325"
+  rootUrldev: "https://localhost:44325"
 };
 
 /*

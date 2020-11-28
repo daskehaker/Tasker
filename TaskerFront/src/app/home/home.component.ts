@@ -10,7 +10,12 @@ export class HomeComponent implements OnInit {
   user: any = {}
 
   constructor(private servise: UserService) {
-    this.servise.getUser().subscribe(res => {this.user = res})
+    this.servise.getUser().subscribe(res => {
+      this.user = res
+      if(this.user.Role === 'Admin'){
+        localStorage.setItem('admin', 'Admin')
+      }
+    })
   }
   
   ngOnInit(): void {

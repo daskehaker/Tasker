@@ -1,3 +1,4 @@
+import { AdminauthGuard } from './auth/adminauth.guard';
 import { AuthentificationComponent } from './authentification/authentification.component';
 import { AuthGuard } from './auth/auth.guard';
 import { BrowserModule } from '@angular/platform-browser';
@@ -31,6 +32,7 @@ import { ProjectComponent } from './project/project.component';
 import { ProjectListComponent } from './project/project-list/project-list.component';
 import { ProjectFormComponent } from './project/project-form/project-form.component';
 import { UserComponent } from './user/user.component';
+import { UserProfileComponent } from './user/user-profile/user-profile.component';
 
 @NgModule({
   declarations: [
@@ -55,7 +57,8 @@ import { UserComponent } from './user/user.component';
     LoginFormComponent,
     RegistrationFormComponent,
     ProjectListComponent,
-    UserComponent
+    UserComponent,
+    UserProfileComponent
   ],
   imports: [
     BrowserModule,
@@ -66,7 +69,8 @@ import { UserComponent } from './user/user.component';
     ReactiveFormsModule,
     ToastrModule.forRoot(),
     RouterModule.forRoot([
-      {path: 'user-details', component: UserComponent },
+      {path: 'users/:id', component: UserProfileComponent, canActivate:[AuthGuard, AdminauthGuard] },
+      {path: 'users', component: UserComponent, canActivate:[AuthGuard, AdminauthGuard]  },
       {path: 'user', component: AuthentificationComponent, children: [
         {path: 'registration', component: RegistrationFormComponent},
         {path: 'login', component: LoginFormComponent}

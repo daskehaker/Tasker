@@ -1,1 +1,18 @@
 <p>user-details works!</p>
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>User Name</th>
+            <th>Full Name</th>
+            <th>Email</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let user of allUsers">
+            <td scope="row">{{user.UserName}}</td>
+            <td scope="row">{{user.FullName}}</td>
+            <td scope="row">{{user.Email}}</td>
+            <td><a [routerLink]="['/users/', user.Id]">Open</a></td>
+        </tr>       
+    </tbody>
+</table>

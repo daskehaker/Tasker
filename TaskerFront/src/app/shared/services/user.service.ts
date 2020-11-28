@@ -8,7 +8,8 @@ import { environment } from 'src/environments/environment';
 })
 export class UserService {
   readonly rootUrl = environment.rootUrl + "/api/applicationusers/" //"https://tasker2.azurewebsites.net/api/applicationusers/"
-  constructor(private http: HttpClient, private router: Router) { }
+
+  constructor(private http: HttpClient, private router: Router) {}
 
   register(newUser){
     return this.http.post(this.rootUrl + 'register', newUser)
@@ -20,6 +21,7 @@ export class UserService {
 
   logout(){
     localStorage.removeItem('token');
+    localStorage.removeItem('admin');
     this.router.navigateByUrl('/user/login');
   }
 
@@ -29,5 +31,9 @@ export class UserService {
 
   getAllUsers(){
     return this.http.get(environment.rootUrl + "/api/userprofiles/all");
+  }
+
+  getUserById(id: string){
+    return this.http.get(environment.rootUrl + "/api/userprofiles/" + id);
   }
 }

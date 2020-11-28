@@ -9,10 +9,10 @@ import { Component, OnInit } from '@angular/core';
 export class UserComponent implements OnInit {
 
   constructor(private userService: UserService) { }
-  allUsers: any;
+  allUsers: any[] = [];
 
   ngOnInit(): void {
-    this.userService.getAllUsers().subscribe(res => {
+    this.userService.getAllUsers().subscribe((res: any[]) => {
       this.allUsers = res
       console.log(res)
     });

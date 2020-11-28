@@ -38,7 +38,11 @@ namespace Tasker2.Controllers
             if (user == null)
                 return NotFound();
 
-            return Ok(user);
+            var result = _mapper.Map<ApplicationUser, ApplicationUserInfoResource>(user);
+            var roles = await _userManager.GetRolesAsync(user);
+            result.Role = roles[0];
+
+            return Ok(result);
         }
 
         [HttpGet]
@@ -60,6 +64,7 @@ namespace Tasker2.Controllers
             var users = _userManager.Users.ToList();
             //_mapper.Map<List<ApplicationUser>, List<ApplicationUserInfoResource>>(users);
             return Ok(_mapper.Map<List<ApplicationUser>, List<ApplicationUserInfoResource>>(users));
+            //return Ok(users);
         }
     }
 }

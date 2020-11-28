@@ -60,7 +60,7 @@ export class LoginFormComponent implements OnInit, OnDestroy {
     },
     (err) => {
       console.log(err);
-      this.error = err.error.message
+      this.error = err.error.message;
     })
   }
 

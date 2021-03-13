@@ -17,8 +17,6 @@ namespace Tasker2.Models
         [StringLength(255)]
         public string Title { get; set; }
         [Required]
-        public WorkoutType Type { get; set; }
-        [Required]
         public DateTime Date { get; set; }
         public string UserId { get; set; }
         public ICollection<WorkoutExercise> Exercises { get; set; }

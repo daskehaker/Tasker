@@ -28,17 +28,10 @@ namespace Tasker2.Mapping
 
             CreateMap<ApplicationUser, ApplicationUserInfoResource>();
 
-             CreateMap<Project, ProjectResource>()
-                .ForMember(pr => pr.Title, opt => opt.MapFrom(p => p.Title))
-                .ForMember(pr => pr.Description, opt => opt.MapFrom(p => p.Description))
-                .ForMember(pr => pr.Date, opt => opt.MapFrom(p => p.Date))
-                .ForMember(pr => pr.ProjectId, opt => opt.MapFrom(p => p.ProjectId));
-
             CreateMap<WorkoutExercise, WorkoutExerciseResource>();
 
             //Domain to api
             CreateMap<ExerciseResource, Exercise>().ForMember(e => e.ExerciseId, opt => opt.Ignore());
-            CreateMap<ProjectResource, Project>().ForMember(e => e.ProjectId, opt => opt.Ignore());
 
             CreateMap<ApplicationUserResource, ApplicationUser>()
                 .ForMember(au => au.FullName, opt => opt.MapFrom(ar => ar.FullName))

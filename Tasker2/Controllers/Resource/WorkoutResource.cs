@@ -16,9 +16,6 @@ namespace Tasker2.Controllers.Resource {
         public string Title { get; set; }
 
         [Required]
-        public WorkoutType Type { get; set; }
-
-        [Required]
         public DateTime Date { get; set; }
         public ICollection<WorkoutExerciseResource> Exercises { get; set; }
 

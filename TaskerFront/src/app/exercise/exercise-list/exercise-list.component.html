@@ -7,8 +7,8 @@
     </thead>
     <tbody>
         <tr *ngFor="let exer of Exercises">
-            <td scope="row" (click)="populateForm(exer)">{{exer.Name}}</td>
-            <td scope="row">{{groups[exer.MusculeGroup]}}</td>
+            <td scope="row" (click)="populateForm(exer)">{{exer.name}}</td>
+            <td scope="row">{{groups[exer.musculeGroup]}}</td>
             <td><button class="btn btn-danger btn-sm" (click)="onDelete(exer.ExerciseId)">Delete</button></td>
         </tr>       
     </tbody>

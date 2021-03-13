@@ -1,8 +1,8 @@
 import { MusculeGroup } from './../../enumerations/musculeGroup';
 
 export class ExerciseDetail {
-    ExerciseId: number;
-    MusculeGroup: MusculeGroup;
-    Name: string;
-    VideoUrl: string;
+    exerciseId: number;
+    musculeGroup: MusculeGroup;
+    name: string;
+    videoUrl: string;
 }

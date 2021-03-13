@@ -1,49 +1,51 @@
-using System;
+using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using AutoMapper;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Tasker2.Controllers.Resource;
 using Tasker2.Data;
 using Tasker2.Models;
 
-namespace Tasker2.Controllers {
+namespace Tasker2.Controllers
+{
 
     [Authorize]
     [Route ("api/[controller]")]
     [ApiController]
     public class WorkoutsController : ControllerBase {
-        private readonly TaskerContext _context;
         private readonly IMapper mapper;
+        private readonly IWorkoutRepository repository;
+        private readonly IUnitOfWork unitOfWork;
 
-        public WorkoutsController (TaskerContext context, IMapper mapper) {
-            _context = context;
+        public WorkoutsController (IMapper mapper, IWorkoutRepository repository, IUnitOfWork unitOfWork) {
             this.mapper = mapper;
+            this.repository = repository;
+            this.unitOfWork = unitOfWork;
         }
 
         // GET: api/Workouts
         [HttpGet]
         public async Task<ActionResult<IEnumerable<WorkoutResource>>> GetWorkouts () {
-            string userId = User.Claims.First(c => c.Type == "UserID").Value;
-            var workouts = await _context.Workouts.Where(w => w.UserId == userId)
-                .Include (e => e.Exercises).OrderBy(w => w.Date).ToListAsync();
+            var userId = GetUserId();
+
+            var workouts = await repository.GetListByUserId(userId);
+
             return mapper.Map<List<Workout>, List<WorkoutResource>> (workouts);
         }
 
         // GET: api/Workouts/5
         [HttpGet ("{id}")]
         public async Task<ActionResult<WorkoutResource>> GetWorkout (int id) {
-            var workout = await _context.Workouts.Include (w => w.Exercises).SingleOrDefaultAsync (w => w.WorkoutId == id);
 
+            var workout = await repository.Get(id);
             if (workout == null) {
                 return NotFound ();
             }
 
-            if (workout.UserId != User.Claims.First(c => c.Type == "UserID").Value)
+            if (workout.UserId != GetUserId())
             {
                 return Forbid();
             }
@@ -54,14 +56,14 @@ namespace Tasker2.Controllers {
         [HttpGet("{id}/Exercises")]
         public async Task<ActionResult<IEnumerable<WorkoutExerciseResource>>> GetWorkoutExercises(int id)
         {
-            var workout = await _context.Workouts.Include(w => w.Exercises).SingleOrDefaultAsync(w => w.WorkoutId == id);
+            var workout = await repository.Get(id);
 
             if (workout == null)
             {
                 return NotFound();
             }
 
-            if (workout.UserId != User.Claims.First(c => c.Type == "UserID").Value)
+            if (workout.UserId != GetUserId())
             {
                 return Forbid();
             }
@@ -79,28 +81,26 @@ namespace Tasker2.Controllers {
                 return BadRequest (ModelState);
             }
 
-            var workout = await _context.Workouts
-                .Include (w => w.Exercises)
-                .SingleOrDefaultAsync (w => w.WorkoutId == id);
+            var workout = await repository.Get(id);
 
             if (workout == null)
             {
                 return NotFound();
             }
 
-            if (workout.UserId != User.Claims.First(c => c.Type == "UserID").Value)
+            if (workout.UserId != GetUserId())
             {
                 return Forbid();
             }
 
             mapper.Map<SaveWorkoutResource, Workout> (saveWorkout, workout);
 
-            workout = MapUrl(workout);
+           // workout = MapUrl(workout);
 
             try {
-                await _context.SaveChangesAsync ();
+                await unitOfWork.CompleteAsync();
             } catch (DbUpdateConcurrencyException) {
-                if (!WorkoutExists (id)) {
+                if (!repository.IfExists(id)) {
                     return NotFound ();
                 } else {
                     throw;
@@ -116,67 +116,68 @@ namespace Tasker2.Controllers {
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
-        public async Task<ActionResult<Workout>> PostWorkout ([FromBody] SaveWorkoutResource saveWorkout) {
+        public async Task<IActionResult> PostWorkout ([FromBody] SaveWorkoutResource saveWorkout) {
             //throw new Exception ();
             if (!ModelState.IsValid) {
                 return BadRequest (ModelState);
             }
 
-            Workout duplicate = await _context.Workouts.SingleOrDefaultAsync(w => w.Title == saveWorkout.Title &&
+            /*Workout duplicate = await _context.Workouts.SingleOrDefaultAsync(w => w.Title == saveWorkout.Title &&
                 w.Date == saveWorkout.Date);
             if (duplicate != null)
             {
-                //return Conflict(duplicate);
                 return Conflict();
-            }
+            }*/
 
-            string userId = User.Claims.First(c => c.Type == "UserID").Value;
+            string userId = GetUserId();
 
             var workout = mapper.Map<SaveWorkoutResource, Workout> (saveWorkout);
             
-            workout = MapUrl(workout);
+           // workout = MapUrl(workout);
             workout.UserId = userId;
 
-            _context.Workouts.Add(workout);
+            repository.Add(workout);
 
-            await _context.SaveChangesAsync();
+            await unitOfWork.CompleteAsync();
 
             var result = mapper.Map<Workout, WorkoutResource> (workout);
 
             return CreatedAtAction("GetWorkout", new { id = result.WorkoutId }, result);
         }
 
+        //SITAS BUDAS GRAZESNIS
         // DELETE: api/Workouts/5
         [HttpDelete ("{id}")]
-        public async Task<ActionResult<Workout>> DeleteWorkout (int id) {
-            if (!WorkoutExists (id)) {
+        public async Task<IActionResult> DeleteWorkout (int id) {
+            if (!repository.IfExists(id)) {
                 return NotFound ();
             }
 
-            var workout = await _context.Workouts.FindAsync (id);
+            var workout = await repository.Get(id, includeRelated: false);
 
-            if (workout.UserId != User.Claims.First(c => c.Type == "UserID").Value)
+            if (workout.UserId != GetUserId())
             {
                 return Forbid();
             }
 
-            _context.Workouts.Remove (workout);
-            await _context.SaveChangesAsync ();
+            repository.Remove(workout);
+            await unitOfWork.CompleteAsync();
 
-            return workout;
+            return Ok(workout);
         }
 
-        private bool WorkoutExists (int id) {
-            return _context.Workouts.Any (e => e.WorkoutId == id);
+        public string GetUserId()
+        {
+            return User.Claims.First(c => c.Type == "UserID").Value;
         }
 
-        private Workout MapUrl(Workout workout) {
+       /* private Workout MapUrl(Workout workout) {
             foreach(var e in workout.Exercises.ToList()){
                 if(_context.Exercises.Find(e.ExerciseId).VideoUrl != null){
                 e.VideoUrl = _context.Exercises.Find(e.ExerciseId).VideoUrl.ToString();
                 }
             }
             return workout;
-        }
+        }*/
     }
 }

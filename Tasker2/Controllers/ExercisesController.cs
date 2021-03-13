@@ -17,32 +17,35 @@ namespace Tasker2.Controllers {
     [Route ("api/[controller]")]
     [ApiController]
     public class ExercisesController : ControllerBase {
-        private readonly TaskerContext _context;
-        private readonly IMapper mapper;
 
-        public ExercisesController (TaskerContext context, IMapper mapper) {
-            _context = context;
+        private readonly IMapper mapper;
+        private readonly IExercisesRepository repository;
+        private readonly IUnitOfWork unitOfWork;
+
+        public ExercisesController (IMapper mapper, IExercisesRepository repository, IUnitOfWork unitOfWork) {
             this.mapper = mapper;
+            this.repository = repository;
+            this.unitOfWork = unitOfWork;
         }
 
         // GET: api/Exercises
         [HttpGet]
         public async Task<IEnumerable<ExerciseResource>> GetExercise () {
-            string userId = User.Claims.First(c => c.Type == "UserID").Value;
-            var exercises = await _context.Exercises.Where(e => e.UserId.Equals(userId)).ToListAsync();
+            string userId = GetUserId();
+            var exercises = await repository.GetListByUserId(userId);
             return mapper.Map<List<Exercise>, List<ExerciseResource>> (exercises);
         }
 
         // GET: api/Exercises/5
         [HttpGet ("{id}")]
         public async Task<ActionResult<ExerciseResource>> GetExercise (int id) {
-            var exercise = await _context.Exercises.FindAsync (id);
+            var exercise = await repository.Get(id);
 
             if (exercise == null) {
                 return NotFound ();
             }
 
-            if (exercise.UserId != User.Claims.First(c => c.Type == "UserID").Value)
+            if (exercise.UserId != GetUserId())
             {
                 return Forbid();
             }
@@ -61,13 +64,13 @@ namespace Tasker2.Controllers {
                 return BadRequest (ModelState);
             }
 
-            var exercise = await _context.Exercises.FindAsync (id);
+            var exercise = await repository.Get(id);
 
             if (exercise == null) {
                 return NotFound ();
             }
 
-            if (exercise.UserId != User.Claims.First(c => c.Type == "UserID").Value)
+            if (exercise.UserId != GetUserId())
             {
                 return Forbid();
             }
@@ -75,16 +78,16 @@ namespace Tasker2.Controllers {
             mapper.Map<ExerciseResource, Exercise> (exerciseResource, exercise);
 
             try {
-                await _context.SaveChangesAsync ();
+                await unitOfWork.CompleteAsync();
             } catch (DbUpdateConcurrencyException) {
-                if (!ExerciseExists (id)) {
+                if (!repository.IfExists(id)) {
                     return NotFound ();
                 } else {
                     throw;
                 }
             }
 
-            exercise = await _context.Exercises.FindAsync (exercise.ExerciseId);
+            exercise = await repository.Get(exercise.ExerciseId);
 
             var result = mapper.Map<Exercise, ExerciseResource> (exercise);
 
@@ -101,18 +104,18 @@ namespace Tasker2.Controllers {
             }
 
             //Check for duplicate 
-            Exercise duplicate = await _context.Exercises.SingleOrDefaultAsync(e => e.Name == exerciseResource.Name);
+            /*Exercise duplicate = await _context.Exercises.SingleOrDefaultAsync(e => e.Name == exerciseResource.Name);
             if (duplicate != null)
             {
                 //return Conflict(duplicate);
                 return Conflict();
-            }
+            }*/
 
             var exercise = mapper.Map<ExerciseResource, Exercise> (exerciseResource);
-            string userId = User.Claims.First(c => c.Type == "UserID").Value;
+            string userId = GetUserId();
             exercise.UserId = userId;
-            _context.Exercises.Add (exercise);
-            await _context.SaveChangesAsync ();
+            repository.Add(exercise);
+            await unitOfWork.CompleteAsync();
 
             return CreatedAtAction ("GetExercise", new { id = exercise.ExerciseId }, exercise);
         }
@@ -120,23 +123,24 @@ namespace Tasker2.Controllers {
         // DELETE: api/Exercises/5
         [HttpDelete ("{id}")]
         public async Task<ActionResult<Exercise>> DeleteExercise (int id) {
-            var exercise = await _context.Exercises.FindAsync (id);
+            var exercise = await repository.Get(id);
             if (exercise == null) {
                 return NotFound ();
             }
-            if (exercise.UserId != User.Claims.First(c => c.Type == "UserID").Value)
+            if (exercise.UserId != GetUserId())
             {
                 return Forbid();
             }
 
-            _context.Exercises.Remove (exercise);
-            await _context.SaveChangesAsync ();
+            repository.Remove (exercise);
+            await unitOfWork.CompleteAsync();
 
             return exercise;
         }
 
-        private bool ExerciseExists (int id) {
-            return _context.Exercises.Any (e => e.ExerciseId == id);
+        public string GetUserId()
+        {
+            return User.Claims.First(c => c.Type == "UserID").Value;
         }
     }
 }

@@ -14,9 +14,6 @@
             <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
                 <a class="nav-link" [routerLink]='["/exercises"]'>Exercises</a>
             </li>
-            <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
-                <a class="nav-link" [routerLink]='["projects"]'>Projects</a>
-            </li>
             <li *ngIf="localStorage.getItem('admin')" class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
                 <a class="nav-link" [routerLink]='["users"]'>Users List</a>
             </li>

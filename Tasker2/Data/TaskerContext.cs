@@ -15,7 +15,6 @@ namespace Tasker2.Data
         public DbSet<Exercise> Exercises { get; set; }
         public DbSet<Workout> Workouts { get; set; }
         public DbSet<ApplicationUser> ApplicationUsers{ get; set;}
-        public DbSet<Project> Projects {get; set;}
 
         public TaskerContext(DbContextOptions<TaskerContext> options) : base(options) {}
 

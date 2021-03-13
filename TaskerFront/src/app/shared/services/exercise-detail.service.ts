@@ -20,7 +20,7 @@ export class ExerciseDetailService {
   }
   
   put(){
-    return this.http.put(this.rootUrl + this.formData.ExerciseId, this.formData)
+    return this.http.put(this.rootUrl + this.formData.exerciseId, this.formData)
   }
   
   delete(id: number){
@@ -46,10 +46,10 @@ export class ExerciseDetailService {
       form.resetForm();
     }
     this.formData={
-      ExerciseId: 0,
-      MusculeGroup: null,
-      Name: "",
-      VideoUrl: ""
+      exerciseId: 0,
+      musculeGroup: null,
+      name: "",
+      videoUrl: ""
     }
   }
 }

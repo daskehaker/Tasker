@@ -1,5 +1,5 @@
 import { TosterNotificationsService } from './../../shared/services/toster-notifications.service';
-import { MusculeGroup } from '../../enumerations/musculeGroup';
+import { m } from '../../enumerations/musculeGroup';
 import { ExerciseDetailService } from '../../shared/services/exercise-detail.service';
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
@@ -27,15 +27,15 @@ export class ExerciseFormComponent implements OnInit {
   resetForm(form?:NgForm){
     if(form) form.resetForm()
     this.service.formData = {
-      ExerciseId: 0,
-      MusculeGroup: null,
-      Name: "",
-      VideoUrl: null
+      exerciseId: 0,
+      musculeGroup: null,
+      name: "",
+      videoUrl: null
     }
   }
 
   onSubmit(form:NgForm){
-    if(this.service.formData.ExerciseId==0) this.insert(form)
+    if(this.service.formData.exerciseId==0) this.insert(form)
     else this.update(form)
   }
 

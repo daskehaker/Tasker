@@ -2,6 +2,6 @@
 <div *ngFor="let we of workout.Exercises; let i = index">
     <exercise-view [exercise]="we" [index]="i"></exercise-view>
 </div>
-<button class="btn btn-success">Done</button>
+<!-- <button class="btn btn-success">Done</button> -->
 <button type="button" [routerLink]="['/workouts']" class="btn btn-light">Back to list</button>
 <button class="btn btn-danger" (click)="delete()">Delete</button>

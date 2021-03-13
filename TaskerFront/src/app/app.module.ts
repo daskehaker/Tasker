@@ -28,9 +28,7 @@ import { WorkoutEditComponent } from './workout/workout-edit/workout-edit.compon
 import { AddExerciseListComponent } from './workout/add-exercise-list/add-exercise-list.component';
 import { LoginFormComponent } from './authentification/login-form/login-form.component';
 import { RegistrationFormComponent } from './authentification/registration-form/registration-form.component';
-import { ProjectComponent } from './project/project.component';
-import { ProjectListComponent } from './project/project-list/project-list.component';
-import { ProjectFormComponent } from './project/project-form/project-form.component';
+
 import { UserComponent } from './user/user.component';
 import { UserProfileComponent } from './user/user-profile/user-profile.component';
 
@@ -49,14 +47,10 @@ import { UserProfileComponent } from './user/user-profile/user-profile.component
     OrderByIndexPipe,
     AuthentificationComponent,
     HomeComponent,
-    ProjectComponent,
-    ProjectFormComponent,
-    ProjectListComponent,
     WorkoutEditComponent,
     AddExerciseListComponent,
     LoginFormComponent,
     RegistrationFormComponent,
-    ProjectListComponent,
     UserComponent,
     UserProfileComponent
   ],
@@ -81,7 +75,6 @@ import { UserProfileComponent } from './user/user-profile/user-profile.component
       {path: 'home', component: HomeComponent, canActivate:[AuthGuard]},
       {path: 'exercises', component: ExerciseComponent, canActivate:[AuthGuard]},
       {path: 'workouts', component: WorkoutComponent, canActivate:[AuthGuard]},
-      {path: 'projects', component: ProjectComponent, canActivate:[AuthGuard]},
       {path: '', redirectTo: 'user/login', pathMatch: 'full'},
       {path: '**', redirectTo: 'exercises', pathMatch: 'full'},
     ])

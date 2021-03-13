@@ -36,10 +36,15 @@ namespace Tasker2
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            // dependency injection for repository pattern
+            services.AddScoped<IWorkoutRepository, WorkoutsRepository>();
+            services.AddScoped<IExercisesRepository, ExercisesRepository>();
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
+
             services.AddAutoMapper(typeof(Startup));
             services.AddControllers().AddJsonOptions(options =>
             {
-                var revolver = options.JsonSerializerOptions.PropertyNamingPolicy = null; //nustatau, kad json 
+               // var revolver = options.JsonSerializerOptions.PropertyNamingPolicy = null; //nustatau, kad json 
                 //modelio atributus grazintu tokiais vardais kaip parasiau, o ne cammelcasing
             });
             services.AddDbContext<TaskerContext>(options =>
